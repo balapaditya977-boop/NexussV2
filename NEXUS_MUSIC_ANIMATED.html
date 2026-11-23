@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f7f6">
+<title>NEXUS Music</title>
+<style>
+:root{--bg:#f5f7f6;--card:#fff;--ink:#111615;--muted:#7d8582;--line:#e7ebe9;--accent:#111615;--green:#1db954;--blue:#1688ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input{font:inherit}button{border:0;cursor:pointer;color:inherit}.app{max-width:760px;margin:auto;min-height:100dvh;padding:env(safe-area-inset-top) 0 calc(150px + env(safe-area-inset-bottom))}
+header{padding:20px 18px 8px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:900;letter-spacing:2px;font-size:22px}.brand span{font-weight:400;color:#7e8783}.avatar{width:38px;height:38px;border-radius:50%;background:#171d1b;color:white;display:grid;place-items:center;font-weight:800}
+main{padding:4px 16px 20px}.page{display:none}.page.active{display:block}.hello{font-size:13px;color:var(--muted);margin:12px 0 4px}.heading{font-size:25px;font-weight:800;margin:0 0 18px;letter-spacing:-.7px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:23px 0 12px}.section-head h2{font-size:17px;margin:0}.subtle{font-size:12px;color:var(--muted)}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick{display:flex;align-items:center;gap:9px;background:var(--card);border-radius:14px;padding:9px;min-height:62px;text-align:left;font-size:12px;font-weight:650;overflow:hidden}.cover{width:45px;height:45px;border-radius:9px;flex:none;display:grid;place-items:center;background:linear-gradient(140deg,#d9e6e1,#aabbb4);font-size:20px}.cover.purple{background:linear-gradient(140deg,#e7dff2,#b9a7d4)}.cover.orange{background:linear-gradient(140deg,#f5dfc9,#d69b67)}.cover.blue{background:linear-gradient(140deg,#d7e8f1,#91b8ca)}
+.streak{background:#fff;border-radius:15px;padding:14px;margin-top:12px;display:flex;align-items:center;gap:12px}.flame{font-size:27px}.streak b{font-size:14px}.streak small{display:block;color:var(--muted);font-size:11px}
+.chips{display:flex;gap:8px;overflow:auto;padding:2px 0 5px}.chip{background:#fff;border:1px solid var(--line);padding:8px 13px;border-radius:30px;font-size:12px;white-space:nowrap}.chip.selected{background:#171d1b;color:#fff}
+.shelf{display:flex;gap:13px;overflow:auto;padding-bottom:6px}.album{width:126px;flex:none;text-align:left;background:transparent;padding:0}.art{width:126px;height:126px;border-radius:13px;background:linear-gradient(145deg,#d5e1dc,#81978d);display:grid;place-items:center;font-size:34px;overflow:hidden}.art.a2{background:linear-gradient(145deg,#e7d8ca,#b17c67)}.art.a3{background:linear-gradient(145deg,#d9d8ed,#8e8bb6)}.art.a4{background:linear-gradient(145deg,#d9e8ee,#77a2b4)}.album b{display:block;font-size:12px;margin-top:7px}.album small{color:var(--muted);font-size:11px}
+.searchbar{display:flex;align-items:center;gap:9px;background:white;border:1px solid var(--line);border-radius:14px;padding:0 13px;margin:8px 0 15px}.searchbar input{width:100%;border:0;outline:0;background:transparent;padding:14px 0}.searchbar button{background:transparent;font-size:19px}.result{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line)}.result .cover{width:49px;height:49px}.result .meta{min-width:0;flex:1}.result b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.result small{color:var(--muted);font-size:11px}.play-small{background:#e9eeeb;border-radius:50%;width:36px;height:36px}
+.tabs{display:flex;gap:20px;overflow:auto;border-bottom:1px solid var(--line);padding:10px 2px}.tabs button{background:none;color:var(--muted);font-size:12px;white-space:nowrap;padding:0 0 8px}.tabs button.active{color:#111;border-bottom:2px solid #111;font-weight:750}
+.collection{background:white;border-radius:14px;padding:14px;margin:12px 0}.collection-row{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid #f0f2f1;font-size:13px}.collection-row:last-child{border:0}.collection-row .ico{width:27px;font-size:18px}.collection-row span:last-child{margin-left:auto;color:var(--muted)}
+.profile-card{background:#fff;border-radius:18px;padding:20px;text-align:center;margin-top:18px}.big-avatar{margin:auto;width:76px;height:76px;border-radius:50%;background:#171d1b;color:white;display:grid;place-items:center;font-size:26px;font-weight:850}.verified{display:inline-flex;align-items:center;gap:4px;color:var(--blue);font-size:12px;font-weight:750}.profile-card h2{margin:10px 0 2px}.profile-card p{color:var(--muted);font-size:12px;margin:5px 0 15px}
+.btn{background:#151b19;color:white;padding:12px 16px;border-radius:30px;font-weight:700;font-size:13px}.btn.light{background:#eef2ef;color:#18201c}.btn.spotify{background:#1db954;color:#071b0e}.btn:disabled{opacity:.45}
+.notice{font-size:12px;color:var(--muted);line-height:1.5;margin:10px 0}.owner-label{background:#eef5ff;color:#1676ce;border-radius:9px;padding:9px 11px;font-size:11px;margin-top:12px}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(760px,100%);padding:0 14px calc(9px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 13%);z-index:5}.mini{background:#fff;border-radius:13px;padding:9px 10px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 15px #17231b0c}.mini .cover{width:40px;height:40px}.mini .meta{flex:1;min-width:0}.mini b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini small{font-size:10px;color:var(--muted)}.mini button{background:transparent;font-size:19px;padding:4px}.nav{margin-top:8px;background:#fff;border-radius:30px;padding:8px 6px;display:flex;justify-content:space-around;box-shadow:0 2px 16px #17231b0b}.nav button{background:transparent;color:#858d89;display:grid;gap:2px;justify-items:center;font-size:10px;min-width:58px;padding:3px}.nav button span{font-size:19px}.nav button.active{color:#101715;font-weight:800}
+#spotifyEmbed{position:fixed;left:-9999px;width:1px;height:1px}
+.empty{color:var(--muted);font-size:13px;padding:18px 4px;text-align:center}.modal{position:fixed;inset:0;background:#10181566;display:none;align-items:end;z-index:10}.modal.show{display:flex}.sheet{background:var(--bg);width:100%;max-width:760px;margin:auto;border-radius:22px 22px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom))}.sheet h3{margin:0 0 8px}.sheet input{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;background:white;margin:6px 0 12px;outline:0}
+@media(min-width:650px){main{padding:10px 24px 30px}.app{padding-bottom:150px}.quick{min-height:72px}.art,.album{width:150px}.art{height:150px}}
+</style>
+
+<style id="nexus-liquid-glass">
+:root{--bg:#e9efed;--card:rgba(255,255,255,.57);--line:rgba(255,255,255,.72);--ink:#111916;--muted:#73817b;--glass-shadow:0 12px 36px rgba(41,65,55,.10),inset 0 1px 0 rgba(255,255,255,.9)}
+body{background:radial-gradient(ellipse at 8% 0%,rgba(181,220,207,.72),transparent 38%),radial-gradient(ellipse at 95% 16%,rgba(211,202,239,.55),transparent 34%),linear-gradient(145deg,#edf3f0,#e8ecef 58%,#f3eff6);background-attachment:fixed}
+header{position:sticky;top:0;z-index:4;background:rgba(239,245,242,.58);backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);border-bottom:1px solid rgba(255,255,255,.55)}
+.brand{letter-spacing:2.5px}.brand span{color:#87938d}
+.avatar,.big-avatar{background:linear-gradient(145deg,#202b26,#101613);box-shadow:0 8px 18px #18271f30}
+.quick,.streak,.collection,.profile-card,.searchbar,.mini,.nav,.sheet{background:rgba(255,255,255,.54);border:1px solid rgba(255,255,255,.82);box-shadow:var(--glass-shadow);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%)}
+.quick{transition:transform .18s ease,background .18s ease}.quick:active,.album:active,.btn:active{transform:scale(.97)}
+.cover,.art{box-shadow:inset 0 1px 0 #ffffffa8,0 7px 18px #344b4010}
+.chip{background:rgba(255,255,255,.55);border-color:#ffffffb8;backdrop-filter:blur(12px)}
+.chip.selected,.btn{background:linear-gradient(135deg,#202b26,#0e1511);color:#fff;box-shadow:0 7px 16px #18271f25}
+.result{border-bottom-color:#ffffffa8}.play-small{background:#ffffffa8;border:1px solid #ffffff}
+.bottom{background:linear-gradient(transparent,rgba(235,241,238,.93) 20%);backdrop-filter:blur(10px)}
+.mini{border-radius:18px}.nav{border-radius:26px}.nav button.active{color:#101a15}
+.section-head h2{letter-spacing:-.3px}.owner-label{background:rgba(225,239,255,.72);border:1px solid #fff}
+.result .cover{background:linear-gradient(145deg,#d9e8e0,#9bb5a7)}
+#spotifyEmbed{border-radius:14px;box-shadow:0 12px 35px #14231d35}
+.modal{backdrop-filter:blur(10px)}.sheet{border-radius:25px 25px 0 0}
+input{color:var(--ink)}
+/* Extra glass panels */
+.glass-panel{background:rgba(255,255,255,.48);border:1px solid rgba(255,255,255,.82);border-radius:18px;padding:14px;box-shadow:var(--glass-shadow);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%)}
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.feature-tile{min-height:90px;text-align:left;border-radius:17px;padding:13px;background:linear-gradient(145deg,rgba(255,255,255,.8),rgba(255,255,255,.32));border:1px solid white;box-shadow:0 8px 22px #243c3010}
+.feature-tile .symbol{font-size:22px;display:block;margin-bottom:8px}.feature-tile b{font-size:12px;display:block}.feature-tile small{font-size:10px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:150px;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#17211c;color:white;padding:10px 16px;border-radius:30px;font-size:12px;z-index:30;transition:.22s;box-shadow:0 8px 24px #101b1640}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:no-preference){.glass-panel,.feature-tile,.quick,.streak,.collection,.profile-card{animation:glassIn .45s ease both}@keyframes glassIn{from{opacity:.5;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}}
+
+/* NEXUS MOTION PACK */
+@keyframes nxIn{from{opacity:0;transform:translateY(14px) scale(.985);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes nxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes nxPulse{0%,100%{box-shadow:0 0 0 0 rgba(29,185,84,0)}50%{box-shadow:0 0 0 7px rgba(29,185,84,.10)}}
+@keyframes nxShimmer{0%{background-position:-180% 0}100%{background-position:180% 0}}
+@keyframes nxBars{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+.page.active{animation:nxIn .42s cubic-bezier(.2,.75,.25,1) both}
+.page.active .heading{animation:nxIn .5s .04s both}
+.page.active .quick,.page.active .streak,.page.active .album,.page.active .collection,.page.active .profile-card,.page.active .glass-panel,.page.active .feature-tile{animation:nxIn .48s both}
+.page.active .quick:nth-child(2),.page.active .album:nth-child(2),.page.active .feature-tile:nth-child(2){animation-delay:.05s}
+.page.active .quick:nth-child(3),.page.active .album:nth-child(3),.page.active .feature-tile:nth-child(3){animation-delay:.10s}
+.page.active .quick:nth-child(4),.page.active .album:nth-child(4),.page.active .feature-tile:nth-child(4){animation-delay:.15s}
+.avatar{animation:nxPulse 3s ease-in-out infinite}.big-avatar{animation:nxFloat 4s ease-in-out infinite}
+.brand{background:linear-gradient(100deg,#111916 20%,#5c8872 45%,#111916 70%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:nxShimmer 6s linear infinite}
+.art{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}.album:hover .art{transform:translateY(-5px) rotate(-1.5deg);box-shadow:0 16px 28px rgba(30,55,43,.18)}
+.quick,.feature-tile,.collection,.profile-card,.chip,.btn,.nav button,.play-small{transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+.quick:active,.feature-tile:active,.chip:active,.play-small:active,.nav button:active{transform:scale(.94)}.btn:active{transform:scale(.96)}
+#playBtn.playing{color:#1db954}#playBtn.playing::after{content:"";display:inline-block;width:3px;height:13px;margin-left:5px;vertical-align:middle;background:#1db954;border-radius:4px;box-shadow:5px 0 #1db954,10px 0 #1db954;transform-origin:bottom;animation:nxBars .65s ease-in-out infinite}
+.sheet{animation:nxIn .3s ease both}.toast.show{animation:nxIn .22s ease both}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+
+</head>
+<body>
+<div class="app">
+<header><div class="brand">NEXUS<span> MUSIC</span></div><button class="avatar" onclick="showPage('you')">N</button></header>
+<main>
+<section class="page active" id="home">
+<div class="hello">Selamat datang di NEXUS</div><h1 class="heading">Temukan musikmu.</h1>
+<div class="quick-grid">
+<button class="quick" onclick="showPage('search')"><span class="cover">⌕</span>Cari musik baru</button>
+<button class="quick" onclick="showPage('library')"><span class="cover purple">♫</span>Koleksi musikmu</button>
+<button class="quick" onclick="showPage('library')"><span class="cover orange">♥</span>Lagu disukai</button>
+<button class="quick" onclick="connectSpotify()"><span class="cover blue">◉</span>Hubungkan Spotify</button>
+</div>
+<div class="streak"><div class="flame">🎧</div><div><b>Musik, tanpa batas kreativitas.</b><small>Temukan lagu favorit berikutnya di NEXUS</small></div></div>
+<div class="section-head"><h2>Jelajahi suasana</h2><span class="subtle">NEXUS picks</span></div>
+<div class="chips"><button class="chip selected" onclick="setMood(this,'Pop')">Pop</button><button class="chip" onclick="setMood(this,'Chill')">Chill</button><button class="chip" onclick="setMood(this,'Indie')">Indie</button><button class="chip" onclick="setMood(this,'Energetic')">Energetic</button><button class="chip" onclick="setMood(this,'Romance')">Romance</button></div>
+<div class="section-head"><h2>Mulai dengarkan</h2><button class="subtle" onclick="showPage('search')">Cari lagu →</button></div>
+<div class="shelf">
+<button class="album" onclick="searchPreset('Arctic Monkeys')"><div class="art">♫</div><b>Indie favorites</b><small>Jelajahi artis</small></button>
+<button class="album" onclick="searchPreset('Hindia')"><div class="art a2">☼</div><b>Musik Indonesia</b><small>Lagu pilihan</small></button>
+<button class="album" onclick="searchPreset('The Weeknd')"><div class="art a3">✦</div><b>Night drive</b><small>Suasana malam</small></button>
+<button class="album" onclick="searchPreset('Taylor Swift')"><div class="art a4">❋</div><b>Pop essentials</b><small>Temukan hits</small></button>
+</div>
+<div class="section-head"><h2>Ruang NEXUS</h2><span class="subtle">Fitur cepat</span></div>
+<div class="feature-grid">
+<button class="feature-tile" onclick="openCreatePlaylist()"><span class="symbol">＋</span><b>Buat playlist</b><small>Susun lagu pilihanmu</small></button>
+<button class="feature-tile" onclick="showQueue()"><span class="symbol">☷</span><b>Antrean lagu</b><small>Lihat lagu berikutnya</small></button>
+<button class="feature-tile" onclick="showPage('library');showLiked()"><span class="symbol">♡</span><b>Favorit</b><small id="homeLikedCount">0 lagu disukai</small></button>
+<button class="feature-tile" onclick="showPage('you')"><span class="symbol">✧</span><b>Pengaturan</b><small>Atur pengalamanmu</small></button>
+</div>
+<div class="section-head"><h2>Baru diputar</h2></div><div id="recent"><div class="empty">Lagu yang kamu pilih akan muncul di sini.</div></div>
+</section>
+<section class="page" id="search">
+<div class="hello">Temukan sesuatu yang kamu suka</div><h1 class="heading">Cari musik</h1>
+<div class="searchbar"><span>⌕</span><input id="query" placeholder="Lagu, artis, atau album..." onkeydown="if(event.key==='Enter')searchMusic()"><button onclick="searchMusic()">↵</button></div>
+<div class="notice" id="searchHint">Cari lagu, artis, atau album. Hubungkan Spotify untuk hasil katalog lengkap.</div><div id="results"></div>
+</section>
+<section class="page" id="library">
+<div class="hello">Semua yang kamu simpan</div><h1 class="heading">Pustaka</h1>
+<div class="tabs"><button class="active">Semua</button><button onclick="showLiked()">Disukai</button><button onclick="showLiked()">Lagu</button><button>Album</button><button>Artis</button></div>
+<div class="collection">
+<div class="collection-row"><span class="ico">♥</span> Lagu disukai <span id="likedCount">0</span></div>
+<div class="collection-row"><span class="ico">♫</span> Baru diputar <span>›</span></div>
+<div class="collection-row"><span class="ico">◉</span> Spotify <span id="spotifyStatus">Belum terhubung</span></div>
+<div class="collection-row"><span class="ico">＋</span> Playlist kamu <span>›</span></div>
+</div><div id="likedList"><div class="empty">Lagu favoritmu akan tersimpan di sini.</div></div>
+<div class="section-head"><h2>Playlist buatanmu</h2><button class="subtle" onclick="openCreatePlaylist()">＋ Buat</button></div>
+<div id="playlistList"><div class="empty">Belum ada playlist. Buat playlist pertamamu.</div></div>
+</section>
+<section class="page" id="you">
+<div class="hello">Akun dan pengaturan</div><h1 class="heading">Profil</h1>
+<div class="profile-card"><div class="big-avatar">N</div><h2>NEXUS OWNER</h2><div class="verified">● ✓ Owner terverifikasi</div><p>Pemilik resmi aplikasi NEXUS MUSIC</p><div class="owner-label">OWNER ACCOUNT · BADGE KHUSUS APLIKASI</div></div>
+<div class="section-head"><h2>Spotify</h2></div><div class="collection"><div class="collection-row"><span class="ico">◉</span><span id="profileSpotify">Belum terhubung</span></div><button class="btn spotify" style="width:100%;margin-top:8px" onclick="connectSpotify()">Hubungkan Spotify</button><button class="btn light" style="width:100%;margin-top:8px" onclick="logoutSpotify()">Putuskan Spotify</button></div>
+<div class="section-head"><h2>Personalisasi</h2></div>
+<div class="collection">
+<div class="collection-row">Nama tampilan <span id="displayName">NEXUS OWNER</span></div>
+<button class="btn light" style="width:100%;margin:8px 0" onclick="editDisplayName()">Ubah nama profil</button>
+<button class="btn light" style="width:100%;margin:0" onclick="clearLocalData()">Hapus data lokal</button>
+</div>
+<div class="section-head"><h2>Tentang</h2></div><div class="collection"><div class="collection-row">Versi aplikasi <span>1.0.0</span></div><div class="collection-row">Dibuat dengan <span>♥ NEXUS</span></div></div>
+</section>
+</main>
+</div>
+<div class="bottom">
+<div class="mini"><div class="cover">♫</div><div class="meta"><b id="nowTitle">NEXUS MUSIC</b><small id="nowArtist">Pilih lagu dari Spotify</small></div><button onclick="toggleLike()" id="likeBtn" aria-label="Sukai lagu">♡</button><button onclick="showQueue()" aria-label="Antrean">☷</button><button onclick="togglePlay()" id="playBtn">▶</button></div>
+<nav class="nav"><button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>Beranda</button><button data-page="search" onclick="showPage('search')"><span>⌕</span>Cari</button><button data-page="library" onclick="showPage('library')"><span>▤</span>Pustaka</button><button data-page="you" onclick="showPage('you')"><span>♙</span>Kamu</button></nav>
+</div>
+<iframe id="spotifyEmbed" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<div class="modal" id="setupModal" onclick="if(event.target===this)closeSetup()"><div class="sheet"><h3>Hubungkan Spotify</h3><p class="notice">Masukkan Client ID dari Spotify Developer Dashboard. Redirect URI harus sama persis dengan alamat halaman NEXUS yang sudah dipublikasikan memakai HTTPS.</p><input id="clientIdInput" placeholder="Spotify Client ID"><button class="btn" style="width:100%" onclick="saveClientId()">Simpan Client ID</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeSetup()">Nanti</button></div></div>
+
+<div class="modal" id="playlistModal" onclick="if(event.target===this)closePlaylist()"><div class="sheet"><h3>Buat playlist</h3><p class="notice">Beri nama playlist barumu.</p><input id="playlistName" maxlength="40" placeholder="Contoh: Late Night Drive"><button class="btn" style="width:100%" onclick="createPlaylist()">Buat playlist</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closePlaylist()">Batal</button></div></div>
+<div class="modal" id="queueModal" onclick="if(event.target===this)closeQueue()"><div class="sheet"><h3>Antrean NEXUS</h3><p class="notice">Lagu yang terakhir kamu pilih.</p><div id="queueContent"></div><button class="btn light" style="width:100%;margin-top:12px" onclick="closeQueue()">Tutup</button></div></div>
+<div class="toast" id="toast">Tersimpan</div>
+<script>
+const $=id=>document.getElementById(id);
+let token=sessionStorage.getItem('nexus_token')||'';
+let currentTrack=null,liked=JSON.parse(localStorage.getItem('nexus_liked')||'[]'),recent=JSON.parse(localStorage.getItem('nexus_recent')||'[]');
+let clientId=localStorage.getItem('nexus_client_id')||'';
+const redirectUri=location.origin==='null'?'':location.origin+location.pathname;
+function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(name).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));}
+function setMood(el,mood){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');$('query').value=mood;showPage('search');searchMusic();}
+function searchPreset(q){$('query').value=q;showPage('search');searchMusic();}
+function closeSetup(){$('setupModal').classList.remove('show')}
+function connectSpotify(){if(!clientId){$('setupModal').classList.add('show');return}if(!redirectUri||location.protocol==='file:'){alert('Publikasikan NEXUS melalui HTTPS terlebih dahulu. Login Spotify tidak berjalan dari file://');return}startSpotifyLogin()}
+function saveClientId(){clientId=$('clientIdInput').value.trim();if(!clientId){alert('Client ID belum diisi');return}localStorage.setItem('nexus_client_id',clientId);closeSetup();startSpotifyLogin()}
+function randomString(n){const a=new Uint8Array(n);crypto.getRandomValues(a);return Array.from(a).map(x=>('0'+x.toString(16)).slice(-2)).join('')}
+async function sha256(plain){const data=new TextEncoder().encode(plain);const digest=await crypto.subtle.digest('SHA-256',data);return btoa(String.fromCharCode(...new Uint8Array(digest))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+async function startSpotifyLogin(){const verifier=randomString(64);sessionStorage.setItem('nexus_verifier',verifier);const challenge=await sha256(verifier);const params=new URLSearchParams({client_id:clientId,response_type:'code',redirect_uri:redirectUri,code_challenge_method:'S256',code_challenge:challenge,scope:'user-read-private user-read-email user-library-read playlist-read-private playlist-read-collaborative'});location.href='https://accounts.spotify.com/authorize?'+params.toString()}
+async function handleCallback(){const params=new URLSearchParams(location.search);const code=params.get('code');if(!code)return;history.replaceState({},document.title,location.pathname);const verifier=sessionStorage.getItem('nexus_verifier');try{const body=new URLSearchParams({client_id:clientId,grant_type:'authorization_code',code,redirect_uri:redirectUri,code_verifier:verifier});const r=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});const data=await r.json();if(!r.ok)throw Error(data.error_description||data.error);token=data.access_token;sessionStorage.setItem('nexus_token',token);updateSpotifyStatus();showPage('home');alert('Spotify berhasil dihubungkan!')}catch(e){alert('Login Spotify gagal: '+e.message)}}
+async function api(path){const r=await fetch('https://api.spotify.com/v1/'+path,{headers:{Authorization:'Bearer '+token}});if(r.status===401){token='';sessionStorage.removeItem('nexus_token');updateSpotifyStatus();throw Error('Sesi Spotify berakhir. Hubungkan kembali.')}const d=await r.json();if(!r.ok)throw Error(d.error?.message||'Spotify API error');return d}
+async function searchMusic(){const q=$('query').value.trim();if(!q)return;if(!token){$('searchHint').textContent='Hubungkan akun Spotify dari tab Kamu untuk mencari lagu.';return}$('searchHint').textContent='Mencari di Spotify...';$('results').innerHTML='';try{const data=await api('search?type=track&limit=20&q='+encodeURIComponent(q));const tracks=data.tracks?.items||[];$('searchHint').textContent=tracks.length?'Hasil pencarian Spotify':'Tidak ada hasil.';$('results').innerHTML=tracks.map(t=>`<div class="result"><div class="cover">${t.album.images?.length?'♫':'♪'}</div><div class="meta"><b>${esc(t.name)}</b><small>${esc(t.artists.map(a=>a.name).join(', '))}</small></div><button class="play-small" onclick="playTrack('${t.uri}','${escAttr(t.name)}','${escAttr(t.artists[0]?.name||'')}')">▶</button><button class="play-small" onclick="likeTrack('${t.uri}','${escAttr(t.name)}','${escAttr(t.artists.map(a=>a.name).join(', '))}')">♡</button></div>`).join('')}catch(e){$('searchHint').textContent=e.message}}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function escAttr(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/[\n\r]/g,' ')}
+function playTrack(uri,name,artist){currentTrack={uri,name,artist};$('nowTitle').textContent=name;$('nowArtist').textContent=artist;$('spotifyEmbed').src='https://open.spotify.com/embed/track/'+encodeURIComponent(uri.split(':').pop())+'?utm_source=generator&theme=0';recent=[currentTrack,...recent.filter(x=>x.uri!==uri)].slice(0,8);localStorage.setItem('nexus_recent',JSON.stringify(recent));renderRecent();$('playBtn').textContent='♫';}
+function togglePlay(){if(!currentTrack){showPage('search');return}$('playBtn').classList.toggle('playing');const f=$('spotifyEmbed');f.style.left='0';f.style.bottom='0';f.style.width='min(340px,90vw)';f.style.height='152px';f.style.zIndex='20';}
+function likeTrack(uri,name,artist){if(liked.some(x=>x.uri===uri))liked=liked.filter(x=>x.uri!==uri);else liked.push({uri,name,artist});localStorage.setItem('nexus_liked',JSON.stringify(liked));renderLiked()}
+function toggleLike(){if(currentTrack)likeTrack(currentTrack.uri,currentTrack.name,currentTrack.artist)}
+function renderLiked(){$('likedCount').textContent=liked.length;$('likedList').innerHTML=liked.length?liked.map(t=>`<div class="result"><div class="cover">♫</div><div class="meta"><b>${esc(t.name)}</b><small>${esc(t.artist)}</small></div><button class="play-small" onclick="playTrack('${escAttr(t.uri)}','${escAttr(t.name)}','${escAttr(t.artist)}')">▶</button></div>`).join(''):'<div class="empty">Lagu favoritmu akan tersimpan di sini.</div>'}
+function showLiked(){renderLiked()}
+function renderRecent(){$('recent').innerHTML=recent.length?recent.slice(0,4).map(t=>`<div class="result"><div class="cover">♫</div><div class="meta"><b>${esc(t.name)}</b><small>${esc(t.artist)}</small></div><button class="play-small" onclick="playTrack('${escAttr(t.uri)}','${escAttr(t.name)}','${escAttr(t.artist)}')">▶</button></div>`).join(''):'<div class="empty">Belum ada lagu diputar.</div>'}
+function updateSpotifyStatus(){const s=token?'Terhubung':'Belum terhubung';$('spotifyStatus').textContent=s;$('profileSpotify').textContent=s}
+function logoutSpotify(){token='';sessionStorage.removeItem('nexus_token');$('spotifyEmbed').src='';updateSpotifyStatus();alert('Spotify sudah diputuskan.')}
+handleCallback();updateSpotifyStatus();renderLiked();renderRecent();
+
+let playlists=JSON.parse(localStorage.getItem('nexus_playlists')||'[]');
+let displayName=localStorage.getItem('nexus_display_name')||'NEXUS OWNER';
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1900)}
+function openCreatePlaylist(){$('playlistModal').classList.add('show');$('playlistName').value='';setTimeout(()=>$('playlistName').focus(),150)}
+function closePlaylist(){$('playlistModal').classList.remove('show')}
+function createPlaylist(){const name=$('playlistName').value.trim();if(!name){toast('Masukkan nama playlist');return}playlists.unshift({id:Date.now(),name,tracks:[]});localStorage.setItem('nexus_playlists',JSON.stringify(playlists));closePlaylist();renderPlaylists();toast('Playlist berhasil dibuat')}
+function renderPlaylists(){const el=$('playlistList');if(!el)return;el.innerHTML=playlists.length?playlists.map(p=>`<div class="collection-row"><span class="ico">♫</span><b>${esc(p.name)}</b><span>${p.tracks.length} lagu</span><button class="play-small" onclick="deletePlaylist(${p.id})">×</button></div>`).join(''):'<div class="empty">Belum ada playlist. Buat playlist pertamamu.</div>'}
+function deletePlaylist(id){playlists=playlists.filter(p=>p.id!==id);localStorage.setItem('nexus_playlists',JSON.stringify(playlists));renderPlaylists();toast('Playlist dihapus')}
+function showQueue(){const el=$('queueContent');el.innerHTML=recent.length?recent.map((t,i)=>`<div class="result"><div class="cover">${i+1}</div><div class="meta"><b>${esc(t.name)}</b><small>${esc(t.artist)}</small></div><button class="play-small" onclick="playTrack('${escAttr(t.uri)}','${escAttr(t.name)}','${escAttr(t.artist)}');closeQueue()">▶</button></div>`).join(''):'<div class="empty">Antrean masih kosong.</div>';$('queueModal').classList.add('show')}
+function closeQueue(){$('queueModal').classList.remove('show')}
+function editDisplayName(){const value=prompt('Nama tampilan baru:',displayName);if(value&&value.trim()){displayName=value.trim().slice(0,32);localStorage.setItem('nexus_display_name',displayName);$('displayName').textContent=displayName;toast('Nama profil diperbarui')}}
+function clearLocalData(){if(!confirm('Hapus lagu disukai, riwayat, dan playlist yang tersimpan di perangkat ini?'))return;liked=[];recent=[];playlists=[];localStorage.removeItem('nexus_liked');localStorage.removeItem('nexus_recent');localStorage.removeItem('nexus_playlists');renderLiked();renderRecent();renderPlaylists();toast('Data lokal dihapus')}
+const oldRenderLiked=renderLiked;
+renderLiked=function(){oldRenderLiked();const count=$('homeLikedCount');if(count)count.textContent=liked.length+' lagu disukai';};
+const oldLikeTrack=likeTrack;
+likeTrack=function(uri,name,artist){oldLikeTrack(uri,name,artist);renderLiked();toast(liked.some(x=>x.uri===uri)?'Ditambahkan ke favorit':'Dihapus dari favorit')};
+const oldPlayTrack=playTrack;
+playTrack=function(uri,name,artist){oldPlayTrack(uri,name,artist);toast('Lagu dipilih: '+name)};
+if($('displayName'))$('displayName').textContent=displayName;
+renderPlaylists();renderLiked();
+
+</script>
+</body></html>
